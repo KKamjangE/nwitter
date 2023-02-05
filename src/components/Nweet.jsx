@@ -8,14 +8,15 @@ import { faTrash, faPencilAlt } from "@fortawesome/free-solid-svg-icons";
 const Nweet = ({ nweetObj, isOwner }) => {
   const [editing, setEditing] = useState(false);
   const [newNweet, setNewNweet] = useState(nweetObj.text);
+
   const onDeleteClick = async () => {
     const ok = window.confirm("Are you sure you want to delete this nweet?");
-    console.log(ok);
     if (ok) {
       await deleteDoc(doc(dbService, `nweets/${nweetObj.id}`));
       await deleteObject(ref(storageService, nweetObj.attachmentUrl));
     }
   };
+
   const toggleEditing = () => setEditing((prev) => !prev);
   const onSubmit = async (event) => {
     event.preventDefault();
@@ -24,10 +25,12 @@ const Nweet = ({ nweetObj, isOwner }) => {
     });
     setEditing(false);
   };
+
   const onChange = (event) => {
     const { value } = event.target;
     setNewNweet(value);
   };
+
   return (
     <div className="nweet">
       {editing ? (
